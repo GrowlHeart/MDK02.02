@@ -1,0 +1,27 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / editors
+.idea/
+*.sln.iml
+.vscode/
+
+# NuGet
+*.nupkg
+.nuget/
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# OS
+.DS_Store
+Thumbs.db
