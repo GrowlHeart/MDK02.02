@@ -25,7 +25,9 @@ public sealed class ReportForm : Form
 
     public ReportForm()
     {
-        Text = "Экспорт отчётов";
+        Text = "UP02.02 — Экспорт отчётов";
+        if (Environment.ProcessPath is { } executablePath)
+            Icon = System.Drawing.Icon.ExtractAssociatedIcon(executablePath);
         Width = 900; Height = 550; MinimumSize = new System.Drawing.Size(650, 400);
         StartPosition = FormStartPosition.CenterScreen;
         data.Columns.Add("Наименование", typeof(string));
