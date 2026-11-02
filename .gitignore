@@ -2,6 +2,9 @@
 [Bb]in/
 [Oo]bj/
 release/
+doc_work/
+*.docx
+*.drawio
 
 # Visual Studio
 .vs/
