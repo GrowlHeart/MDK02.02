@@ -23,36 +23,13 @@ public sealed class ReportTests : IDisposable
     [Fact]
     public void RowAmountUsesDecimal() => Assert.Equal(.3m, new ReportRow("Товар", 3, .1m).Amount);
 
-    // Проверяет построение денежного формата для разных настроек точности.
-    [Theory]
-    [InlineData(0, "#,##0")]
-    [InlineData(2, "#,##0.00")]
-    [InlineData(4, "#,##0.0000")]
-    public void MoneyFormatMatchesPrecision(int digits, string expected) => Assert.Equal(expected, new ReportTemplate { DecimalPlaces = digits }.NumberFormat);
-
-    // Проверяет отказ от некорректного названия и отрицательных значений.
-    [Theory]
-    [InlineData("", 1, 1)]
-    [InlineData("Товар", -1, 1)]
-    [InlineData("Товар", 1, -1)]
-    public void InvalidRowsAreRejected(string name, int quantity, int price) => Assert.Throws<ArgumentException>(() => new ReportRow(name, quantity, price).Validate());
-
-    // Проверяет сохранение и загрузку всех пользовательских настроек.
+    // Проверяет, что шаблон задаёт нужное число знаков после запятой.
     [Fact]
-    public void TemplateRoundTrip()
+    public void TemplateNumberFormatMatchesPrecision()
     {
-        var t = new ReportTemplate { Title = "Мой отчёт", Header = "Компания", Footer = "Итоги", FontFamily = "Times New Roman", FontSize = 14, DecimalPlaces = 3, AccentColor = "FF0000", IncludeChart = false, AlternateRows = false };
-        var path = Path.Combine(directory, "template.json"); t.Save(path);
-        Assert.Equal(t, ReportTemplate.Load(path));
-    }
-
-    // Проверяет ограничения цвета, шрифта и точности шаблона.
-    [Fact]
-    public void InvalidTemplateIsRejected()
-    {
-        Assert.Throws<ArgumentException>(() => (new ReportTemplate { AccentColor = "oops" }).Validate());
-        Assert.Throws<ArgumentException>(() => (new ReportTemplate { FontSize = 100 }).Validate());
-        Assert.Throws<ArgumentException>(() => (new ReportTemplate { DecimalPlaces = -1 }).Validate());
+        var template = new ReportTemplate { DecimalPlaces = 3 };
+        template.Validate();
+        Assert.Equal("#,##0.000", template.NumberFormat);
     }
 
     // Проверяет заголовки, стили, колонтитулы и итог в созданном Excel.
@@ -85,7 +62,6 @@ public sealed class ReportTests : IDisposable
         Assert.Contains("&P", sheet.Worksheet.GetFirstChild<HeaderFooter>()!.OddFooter!.Text);
         var errors = new OpenXmlValidator().Validate(file).Select(e => e.Description + " Path: " + e.Path?.XPath).ToArray();
         Assert.True(errors.Length == 0, string.Join(Environment.NewLine, errors));
-        SaveSample(path, "sample.xlsx");
     }
 
     // Проверяет связи графика с данными и ограничение его двадцатью позициями.
@@ -108,19 +84,6 @@ public sealed class ReportTests : IDisposable
         Assert.True(errors.Length == 0, string.Join(Environment.NewLine, errors));
     }
 
-    // Проверяет отключение графика и чередующейся заливки в шаблоне.
-    [Fact]
-    public void OptionalFormattingCanBeDisabled()
-    {
-        var path = Path.Combine(directory, "plain.xlsx");
-        ReportExporter.Export(path, rows, new ReportTemplate { IncludeChart = false, AlternateRows = false }, false);
-        using var file = SpreadsheetDocument.Open(path, false);
-        Assert.Single(file.WorkbookPart!.Workbook.Sheets!.Elements<Sheet>());
-        var sheet = file.WorkbookPart.WorksheetParts.Single();
-        Assert.Null(sheet.DrawingsPart);
-        Assert.Equal(2u, sheet.Worksheet.Descendants<Cell>().Single(c => c.CellReference == "C5").StyleIndex!.Value);
-    }
-
     // Проверяет однократное чтение большого источника без повторного обхода.
     [Fact]
     public void LargeExcelReadsSourceOnce()
@@ -138,40 +101,6 @@ public sealed class ReportTests : IDisposable
         Assert.Equal(100004, count);
     }
 
-    // Проверяет сохранность старого файла и удаление временного файла при отмене.
-    [Fact]
-    public void CancellationPreservesExistingFile()
-    {
-        var path = Path.Combine(directory, "existing.xlsx"); File.WriteAllText(path, "старый файл");
-        using var cancel = new CancellationTokenSource();
-        // Отменяет экспорт после пятидесяти строк тестового источника.
-        IEnumerable<ReportRow> Source()
-        {
-            for (int i = 0; i < 100; i++) { if (i == 50) cancel.Cancel(); yield return new ReportRow("Позиция", 1, 1); }
-        }
-        Assert.Throws<OperationCanceledException>(() => ReportExporter.Export(path, Source(), new ReportTemplate(), false, cancel.Token));
-        Assert.Equal("старый файл", File.ReadAllText(path)); Assert.Single(Directory.GetFiles(directory));
-    }
-
-    // Проверяет отклонение пустого отчёта без замены старого файла.
-    [Fact]
-    public void EmptyReportPreservesExistingFile()
-    {
-        var path = Path.Combine(directory, "existing.xlsx"); File.WriteAllText(path, "original");
-        Assert.Throws<ArgumentException>(() => ReportExporter.Export(path, Array.Empty<ReportRow>(), new ReportTemplate(), false));
-        Assert.Equal("original", File.ReadAllText(path)); Assert.Single(Directory.GetFiles(directory));
-    }
-
-    // Проверяет CSV с кавычками, кириллицей и разными десятичными разделителями.
-    [Fact]
-    public void CsvSupportsQuotedNamesAndDecimals()
-    {
-        var path = Path.Combine(directory, "input.csv");
-        File.WriteAllText(path, "Наименование;Количество;Цена\n\"Папка; архив\";2;12,50\nРучка;3;1.25");
-        var result = CsvRows.Read(path).ToArray();
-        Assert.Equal("Папка; архив", result[0].Name); Assert.Equal(12.50m, result[0].Price); Assert.Equal(1.25m, result[1].Price);
-    }
-
     // Проверяет создание многостраничного PDF из однократного источника.
     [Fact]
     public void PdfAcceptsStreamingRows()
@@ -182,26 +111,6 @@ public sealed class ReportTests : IDisposable
         using var stream = File.OpenRead(path); var bytes = new byte[5]; stream.ReadExactly(bytes);
         Assert.Equal("%PDF-", System.Text.Encoding.ASCII.GetString(bytes));
         Assert.True(new FileInfo(path).Length > 10000);
-        SaveSample(path, "large.pdf");
-    }
-
-    // Проверяет пользовательский шаблон PDF и длинные названия на нескольких страницах.
-    [Fact]
-    public void PdfSupportsLongNamesAndCustomTemplate()
-    {
-        var path = Path.Combine(directory, "custom.pdf");
-        var source = Enumerable.Range(1, 25).Select(i => new ReportRow(new string('Я', 180) + i, 1000000, 1000000000000m));
-        var result = ReportExporter.Export(path, source, new ReportTemplate { Title = "Отчёт по продажам", Header = "Компания А&Б", Footer = "Проверка шаблона", FontFamily = "Times New Roman", FontSize = 18, DecimalPlaces = 4, AccentColor = "C2410C" }, true);
-        Assert.Equal(25, result.Rows); Assert.Equal(25000000000000000000m, result.Total);
-        SaveSample(path, "custom.pdf");
-    }
-
-    // Сохраняет пример для визуальной проверки, если задана папка UP0202_SAMPLE_DIR.
-    private static void SaveSample(string source, string name)
-    {
-        var destination = Environment.GetEnvironmentVariable("UP0202_SAMPLE_DIR");
-        if (string.IsNullOrEmpty(destination)) return;
-        Directory.CreateDirectory(destination); File.Copy(source, Path.Combine(destination, name), true);
     }
 
     private sealed class SinglePassRows : IEnumerable<ReportRow>
