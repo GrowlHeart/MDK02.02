@@ -4,7 +4,7 @@
 
 ## Ветки разработки
 
-`dev-code` содержит исходный код приложения. `dev-tests` содержит приложение и папку `tests` для разработки и запуска автоматических проверок. Код приложения нужен тестам: тестовый проект ссылается на `src/Core/ReportExport.Core.csproj`.
+`dev-code` содержит исходный код приложения. `dev-tests` содержит только тестовый проект в папке `tests`, без приложения. Ветки независимо подготовлены для последующего слияния в `main`.
 
 Этот README относится к ветке `dev-code`. Инструкция запуска тестов из `dev-tests` приведена ниже.
 
@@ -64,12 +64,11 @@ dotnet build ReportExport.csproj -c Release
 dotnet run --project ReportExport.csproj
 ```
 
-Тесты находятся в отдельной ветке [dev-tests](https://github.com/GrowlHeart/MDK02.02/tree/dev-tests/tests). Чтобы запустить их в локальной копии репозитория:
+Тесты находятся в отдельной ветке [dev-tests](https://github.com/GrowlHeart/MDK02.02/tree/dev-tests/tests). Тестовый проект ссылается на `src/Core/ReportExport.Core.csproj`: запускать проверки нужно после объединения приложения и тестов в `main`. Отдельная ветка `dev-tests` не содержит приложение, поэтому сама по себе не собирается.
 
 ```powershell
-git switch dev-tests
+git switch main
 dotnet test tests/ReportExport.Tests.csproj -c Release --collect:"XPlat Code Coverage" --results-directory TestResults
-git switch dev-code
 ```
 
 Тесты проверяют расчёт с decimal, JSON-шаблоны, денежные форматы, шрифты, цвет, заголовки, колонтитулы, ссылки графика, CSV, отмену и потоковый источник из 100000 строк. XLSX дополнительно проверяется валидатором Open XML. Отчёт покрытия сохраняется в TestResults. Эти проверки проверяют код экспорта; они не заменяют ручную проверку интерфейса и печати в Excel.
