@@ -2,6 +2,12 @@
 
 Приложение Windows на C#. Версия 0.2.0 добавляет шаблоны, потоковую обработку больших CSV, оформление Excel и автоматические тесты.
 
+## Ветки разработки
+
+`dev-code` содержит исходный код приложения. `dev-tests` содержит приложение и папку `tests` для разработки и запуска автоматических проверок. Код приложения нужен тестам: тестовый проект ссылается на `src/Core/ReportExport.Core.csproj`.
+
+Этот README относится к ветке `dev-code`. Инструкция запуска тестов из `dev-tests` приведена ниже.
+
 ## Готовое приложение
 
 В [Releases](https://github.com/GrowlHeart/MDK02.02/releases) скачайте UP02.02.exe для Windows x64. Устанавливать .NET для готового EXE не требуется.
@@ -44,7 +50,6 @@ Excel записывается через OpenXmlWriter, PDF рисуется п
 | src/Core/Models.cs | Строка отчёта, шаблон JSON, чтение CSV и безопасное сохранение |
 | src/Core/ExcelReport.cs | Построчная запись XLSX, стили, колонтитулы и график |
 | src/Core/PdfReport.cs | Постраничная запись PDF |
-| tests/ReportTests.cs | Автоматические проверки расчётов, шаблонов и форматирования |
 
 Перед функциями есть короткие комментарии об их назначении. Основной путь: кнопка Export → ReportExporter.Export → ExcelReport.Write или PdfReport.Write.
 
@@ -57,7 +62,14 @@ IEnumerable<ReportRow> передаёт строки по очереди. Cancel
 ```powershell
 dotnet build ReportExport.csproj -c Release
 dotnet run --project ReportExport.csproj
+```
+
+Тесты находятся в отдельной ветке [dev-tests](https://github.com/GrowlHeart/MDK02.02/tree/dev-tests/tests). Чтобы запустить их в локальной копии репозитория:
+
+```powershell
+git switch dev-tests
 dotnet test tests/ReportExport.Tests.csproj -c Release --collect:"XPlat Code Coverage" --results-directory TestResults
+git switch dev-code
 ```
 
 Тесты проверяют расчёт с decimal, JSON-шаблоны, денежные форматы, шрифты, цвет, заголовки, колонтитулы, ссылки графика, CSV, отмену и потоковый источник из 100000 строк. XLSX дополнительно проверяется валидатором Open XML. Отчёт покрытия сохраняется в TestResults. Эти проверки проверяют код экспорта; они не заменяют ручную проверку интерфейса и печати в Excel.
