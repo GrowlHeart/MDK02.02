@@ -1,0 +1,128 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build, format and test
+    runs-on: windows-2022
+    timeout-minutes: 20
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Detect available projects
+        id: projects
+        run: |
+          $app = Test-Path 'ReportExport.csproj'
+          $core = Test-Path 'src/Core/ReportExport.Core.csproj'
+          $tests = Test-Path 'tests/ReportExport.Tests.csproj'
+          "app=$($app.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+          "tests=$($tests.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+          if ($tests -and -not $core) {
+            throw 'Tests require src/Core/ReportExport.Core.csproj. Merge dev-code into main first, then update the test branch from main.'
+          }
+          if (-not $app -and -not $tests) {
+            'CI configuration is connected. Application and test projects have not been merged yet; no build or tests were performed.' >> $env:GITHUB_STEP_SUMMARY
+          } else {
+            "Application found: $app. Test project found: $tests." >> $env:GITHUB_STEP_SUMMARY
+            if (-not $tests) {
+              'Application checks will run. Tests and coverage will run after the test project is merged.' >> $env:GITHUB_STEP_SUMMARY
+            }
+          }
+
+      - name: Set up .NET 8
+        if: steps.projects.outputs.app == 'true' || steps.projects.outputs.tests == 'true'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Select .NET 8 SDK
+        if: steps.projects.outputs.app == 'true' || steps.projects.outputs.tests == 'true'
+        run: |
+          if (-not (Test-Path 'global.json')) {
+            $sdk = dotnet --list-sdks | Where-Object { $_ -match '^8\.' } | Select-Object -Last 1
+            if (-not $sdk) { throw '.NET 8 SDK was not installed.' }
+            $version = ($sdk -split ' ')[0]
+            @{ sdk = @{ version = $version; rollForward = 'latestPatch'; allowPrerelease = $false } } |
+              ConvertTo-Json -Depth 3 | Set-Content -LiteralPath 'global.json' -Encoding utf8
+          }
+
+      - name: Restore application
+        if: steps.projects.outputs.app == 'true'
+        run: dotnet restore ReportExport.csproj
+
+      - name: Restore tests
+        if: steps.projects.outputs.tests == 'true'
+        run: dotnet restore tests/ReportExport.Tests.csproj
+
+      - name: Check application formatting
+        if: steps.projects.outputs.app == 'true'
+        run: dotnet format whitespace ReportExport.csproj --verify-no-changes --no-restore
+
+      - name: Check test formatting
+        if: steps.projects.outputs.tests == 'true'
+        run: dotnet format whitespace tests/ReportExport.Tests.csproj --verify-no-changes --no-restore
+
+      - name: Build application
+        if: steps.projects.outputs.app == 'true'
+        run: dotnet build ReportExport.csproj --configuration Release --no-restore --warnaserror
+
+      - name: Build tests
+        if: steps.projects.outputs.tests == 'true'
+        run: dotnet build tests/ReportExport.Tests.csproj --configuration Release --no-restore --warnaserror
+
+      - name: Run tests and collect coverage
+        if: steps.projects.outputs.tests == 'true'
+        run: >-
+          dotnet test tests/ReportExport.Tests.csproj
+          --configuration Release --no-build --no-restore
+          --logger "trx;LogFileName=tests.trx"
+          --collect:"XPlat Code Coverage"
+          --results-directory TestResults
+
+      - name: Save test results and coverage
+        if: always() && steps.projects.outputs.tests == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-and-coverage
+          path: |
+            TestResults/**/*.trx
+            TestResults/**/coverage.cobertura.xml
+          retention-days: 14
+
+      - name: Publish Windows application
+        if: steps.projects.outputs.app == 'true'
+        run: >-
+          dotnet publish ReportExport.csproj --configuration Release
+          --runtime win-x64 --self-contained true
+          -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:DebugType=None -p:DebugSymbols=false
+          --output artifacts/windows-x64
+
+      - name: Save Windows application
+        if: steps.projects.outputs.app == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: UP02.02-windows-x64
+          path: artifacts/windows-x64/UP02.02.exe
+          if-no-files-found: error
+          retention-days: 14
