@@ -2,9 +2,13 @@
 
 Приложение Windows на C#. Версия 0.1.0 добавляет шаблоны, потоковую обработку больших CSV, оформление Excel и автоматические тесты.
 
+[![CI](https://github.com/GrowlHeart/MDK02.02/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/GrowlHeart/MDK02.02/actions/workflows/ci.yml)
+
+[Документация и диаграммы](docs/README.md) · [Проверки и покрытие](docs/testing.md) · [История изменений](CHANGELOG.md)
+
 ## Ветки разработки
 
-`dev-code` содержит исходный код приложения. `dev-tests` содержит только тестовый проект в папке `tests`.
+`main` содержит общий проект: приложение, Core, тесты и CI. Исходники и тесты первоначально разрабатывались в `dev-code` и `dev-tests`. Новые изменения выполняются в отдельных ветках от актуального `main` и проходят через PR.
 
 ## Готовое приложение
 
@@ -41,14 +45,14 @@ dotnet build ReportExport.csproj -c Release
 dotnet run --project ReportExport.csproj
 ```
 
-Тесты находятся в отдельной ветке [dev-tests](https://github.com/GrowlHeart/MDK02.02/tree/dev-tests/tests). Тестовый проект ссылается на `src/Core/ReportExport.Core.csproj`: запускать проверки нужно после объединения приложения и тестов в `main`. Отдельная ветка `dev-tests` не содержит приложение, поэтому сама по себе не собирается.
+В `main` уже находятся приложение и тесты. Тестовый проект ссылается на `src/Core/ReportExport.Core.csproj`.
 
 ```powershell
 git switch main
 dotnet test tests/ReportExport.Tests.csproj -c Release --collect:"XPlat Code Coverage" --results-directory TestResults
 ```
 
-Тесты проверяют расчёт с decimal, JSON-шаблоны, денежные форматы, шрифты, цвет, заголовки, колонтитулы, ссылки графика, CSV, отмену и потоковый источник из 100000 строк. XLSX дополнительно проверяется валидатором Open XML. Отчёт покрытия сохраняется в TestResults. Эти проверки проверяют код экспорта; они не заменяют ручную проверку интерфейса и печати в Excel.
+Шесть тестов проверяют расчёт с decimal, точность числового формата, оформление XLSX, ссылки графика, однократное чтение источника из 100000 строк и создание PDF. XLSX дополнительно проверяется валидатором Open XML. Отчёт покрытия сохраняется в TestResults. Подробные результаты и границы проверок приведены в [docs/testing.md](docs/testing.md).
 
 Сборка одного автономного EXE:
 

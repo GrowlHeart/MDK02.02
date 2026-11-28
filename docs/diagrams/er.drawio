@@ -1,0 +1,61 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Страница-1" id="LS0KTdm5ysWSzUCSH_aw">
+    <mxGraphModel dx="1450" dy="1464" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="light-dark(#ffffff, #121212)" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;text;strokeColor=none;fillColor=none;fontSize=25;fontStyle=1;align=left;" value="ER-модель отчётов и экспорта" vertex="1">
+          <mxGeometry height="45" width="1290" x="35" y="25" as="geometry" />
+        </mxCell>
+        <mxCell id="note" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;text;strokeColor=none;fillColor=none;align=left;fontSize=16;" value="Проектная схема для будущего хранения. Сейчас БД нет: строки находятся в памяти, шаблон сохраняется в JSON." vertex="1">
+          <mxGeometry height="52" width="1290" x="35" y="78" as="geometry" />
+        </mxCell>
+        <mxCell id="th" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;rounded=0;fillColor=#dbeafe;strokeColor=#334155;fontStyle=1;fontSize=17;" value="ШАБЛОН" vertex="1">
+          <mxGeometry height="42" width="310" x="40" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="tb" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;rounded=0;fillColor=#ffffff;strokeColor=#334155;align=left;verticalAlign=top;spacing=12;fontSize=15;" value="PK  template_id&#xa;Название и колонтитулы&#xa;Шрифт, размер, цвет&#xa;Точность чисел&#xa;Фон строк и график" vertex="1">
+          <mxGeometry height="203" width="310" x="40" y="222" as="geometry" />
+        </mxCell>
+        <mxCell id="rh" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;rounded=0;fillColor=#dbeafe;strokeColor=#334155;fontStyle=1;fontSize=17;" value="ОТЧЁТ" vertex="1">
+          <mxGeometry height="42" width="310" x="510" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="rb" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;rounded=0;fillColor=#ffffff;strokeColor=#334155;align=left;verticalAlign=top;spacing=12;fontSize=15;" value="PK  report_id&#xa;FK  template_id&#xa;Источник: таблица / CSV&#xa;Дата создания" vertex="1">
+          <mxGeometry height="168" width="310" x="510" y="222" as="geometry" />
+        </mxCell>
+        <mxCell id="rowh" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;rounded=0;fillColor=#dbeafe;strokeColor=#334155;fontStyle=1;fontSize=17;" value="СТРОКА ОТЧЁТА" vertex="1">
+          <mxGeometry height="42" width="310" x="510" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="rowb" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;rounded=0;fillColor=#ffffff;strokeColor=#334155;align=left;verticalAlign=top;spacing=12;fontSize=15;" value="PK, FK  report_id&#xa;PK  row_number&#xa;Наименование&#xa;Количество&#xa;Цена&#xa;Сумма = количество × цена" vertex="1">
+          <mxGeometry height="223" width="310" x="510" y="542" as="geometry" />
+        </mxCell>
+        <mxCell id="eh" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;rounded=0;fillColor=#dbeafe;strokeColor=#334155;fontStyle=1;fontSize=17;" value="ОПЕРАЦИЯ ЭКСПОРТА" vertex="1">
+          <mxGeometry height="42" width="330" x="980" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="eb" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;rounded=0;fillColor=#ffffff;strokeColor=#334155;align=left;verticalAlign=top;spacing=12;fontSize=15;" value="PK  export_id&#xa;FK  report_id&#xa;Формат: PDF / XLSX&#xa;Путь к файлу&#xa;Число строк и итог&#xa;Состояние операции" vertex="1">
+          <mxGeometry height="223" width="330" x="980" y="222" as="geometry" />
+        </mxCell>
+        <mxCell id="rel1" edge="1" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;endArrow=open;endFill=0;strokeColor=#475569;strokeWidth=1.5;labelBackgroundColor=#ffffff;whiteSpace=nowrap;" value="1 : N">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="350" y="270" as="sourcePoint" />
+            <mxPoint x="510" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel2" edge="1" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;endArrow=open;endFill=0;strokeColor=#475569;strokeWidth=1.5;labelBackgroundColor=#ffffff;whiteSpace=nowrap;" value="1 : N">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="665" y="390" as="sourcePoint" />
+            <mxPoint x="665" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel3" edge="1" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;endArrow=open;endFill=0;strokeColor=#475569;strokeWidth=1.5;labelBackgroundColor=#ffffff;whiteSpace=nowrap;" value="1 : N">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="820" y="270" as="sourcePoint" />
+            <mxPoint x="980" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;text;strokeColor=none;fillColor=none;align=left;fontSize=16;" value="PK — первичный ключ. FK — внешний ключ. Идентификаторы относятся к проектной схеме, а не к текущим классам C#." vertex="1">
+          <mxGeometry height="55" width="1270" x="40" y="805" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
