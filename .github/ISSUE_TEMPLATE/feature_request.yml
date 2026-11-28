@@ -1,0 +1,31 @@
+name: Новая функция
+description: Предложить улучшение приложения.
+title: "[FEATURE] "
+body:
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Что предлагается
+      placeholder: Опишите нужную функцию.
+    validations:
+      required: true
+  - type: textarea
+    id: purpose
+    attributes:
+      label: Зачем это нужно
+      placeholder: Какую задачу это поможет решить?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Когда задача считается выполненной
+      placeholder: |
+        - [ ] Укажите результат, который можно проверить.
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Примеры или скриншоты
+      description: Прикрепите дополнительные материалы, если они есть.

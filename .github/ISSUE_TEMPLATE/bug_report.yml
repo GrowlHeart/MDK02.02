@@ -1,0 +1,62 @@
+name: Ошибка
+description: Сообщить об ошибке в приложении.
+title: "[BUG] "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Что не работает
+      placeholder: Кратко опишите проблему.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Как повторить
+      placeholder: |
+        1. Открыть приложение.
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Ожидаемый результат
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Фактический результат
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Приоритет
+      options:
+        - P1 — основная функция не работает или теряются данные
+        - P2 — функция работает неправильно
+        - P3 — небольшая проблема оформления
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Версия приложения
+      placeholder: Например, v0.1.0.
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Версия Windows
+      placeholder: Например, Windows 10 x64.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Скриншоты или файлы
+      description: Перетащите сюда скриншоты, логи или пример отчёта.
