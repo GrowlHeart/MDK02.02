@@ -60,7 +60,7 @@ jobs:
       - name: Configure .NET CLI
         if: steps.projects.outputs.app == 'true' || steps.projects.outputs.tests == 'true'
         run: |
-          $dotnetPath = (Get-Command dotnet -CommandType Application).Source
+          $dotnetPath = (Get-Command dotnet -CommandType Application | Select-Object -First 1).Source
           $dotnetRoot = Split-Path -Parent $dotnetPath
           "DOTNET_HOST_PATH=$dotnetPath" >> $env:GITHUB_ENV
           "DOTNET_ROOT=$dotnetRoot" >> $env:GITHUB_ENV
@@ -159,3 +159,4 @@ jobs:
           path: artifacts/windows-x64/UP02.02.exe
           if-no-files-found: error
           retention-days: 14
+
