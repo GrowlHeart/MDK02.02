@@ -2,6 +2,7 @@
 [Bb]in/
 [Oo]bj/
 release/
+artifacts/
 doc_work/
 *.docx
 *.drawio
