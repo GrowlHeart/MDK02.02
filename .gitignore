@@ -1,6 +1,11 @@
 # Build output
 [Bb]in/
 [Oo]bj/
+release/
+artifacts/
+doc_work/
+*.docx
+*.drawio
 
 # Visual Studio
 .vs/
