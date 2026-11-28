@@ -5,6 +5,7 @@ release/
 doc_work/
 *.docx
 *.drawio
+!docs/diagrams/*.drawio
 
 # Visual Studio
 .vs/

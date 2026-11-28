@@ -1,0 +1,130 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Страница-1" id="LS0KTdm5ysWSzUCSH_aw">
+    <mxGraphModel dx="1450" dy="1464" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="light-dark(#ffffff, #121212)" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;text;strokeColor=none;fillColor=none;fontSize=25;fontStyle=1;align=left;" value="UML Use Case — модуль экспорта" vertex="1">
+          <mxGeometry height="45" width="1130" x="35" y="25" as="geometry" />
+        </mxCell>
+        <mxCell id="boundary" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;rounded=0;fillColor=#ffffff;strokeColor=#475569;align=left;verticalAlign=top;spacing=15;fontStyle=1;fontSize=17;" value="UP02.02 — настольное приложение" vertex="1">
+          <mxGeometry height="830" width="880" x="270" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="head" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;ellipse;fillColor=#ffffff;strokeColor=#334155;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="38" width="38" x="91" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="body" edge="1" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;endArrow=open;endFill=0;strokeColor=#475569;strokeWidth=1.5;labelBackgroundColor=#ffffff;whiteSpace=nowrap;endArrow=none;strokeWidth=2;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="428" as="sourcePoint" />
+            <mxPoint x="110" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arms" edge="1" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;endArrow=open;endFill=0;strokeColor=#475569;strokeWidth=1.5;labelBackgroundColor=#ffffff;whiteSpace=nowrap;endArrow=none;strokeWidth=2;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="75" y="450" as="sourcePoint" />
+            <mxPoint x="145" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg1" edge="1" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;endArrow=open;endFill=0;strokeColor=#475569;strokeWidth=1.5;labelBackgroundColor=#ffffff;whiteSpace=nowrap;endArrow=none;strokeWidth=2;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="490" as="sourcePoint" />
+            <mxPoint x="77" y="540" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg2" edge="1" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;endArrow=open;endFill=0;strokeColor=#475569;strokeWidth=1.5;labelBackgroundColor=#ffffff;whiteSpace=nowrap;endArrow=none;strokeWidth=2;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="490" as="sourcePoint" />
+            <mxPoint x="143" y="540" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="actor" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;text;strokeColor=none;fillColor=none;fontSize=17;" value="Пользователь" vertex="1">
+          <mxGeometry height="40" width="150" x="35" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="edit" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;ellipse;fillColor=#eff6ff;strokeColor=#334155;" value="Редактировать таблицу" vertex="1">
+          <mxGeometry height="70" width="260" x="340" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="csv" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;ellipse;fillColor=#eff6ff;strokeColor=#334155;" value="Открыть CSV" vertex="1">
+          <mxGeometry height="70" width="260" x="340" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="config" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;ellipse;fillColor=#eff6ff;strokeColor=#334155;" value="Настроить оформление" vertex="1">
+          <mxGeometry height="70" width="260" x="340" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="xlsx" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;ellipse;fillColor=#eff6ff;strokeColor=#334155;" value="Экспортировать XLSX" vertex="1">
+          <mxGeometry height="70" width="260" x="340" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="pdf" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;ellipse;fillColor=#eff6ff;strokeColor=#334155;" value="Экспортировать PDF" vertex="1">
+          <mxGeometry height="70" width="260" x="340" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;ellipse;fillColor=#eff6ff;strokeColor=#334155;" value="Отменить экспорт" vertex="1">
+          <mxGeometry height="70" width="260" x="340" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="save" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;ellipse;fillColor=#eff6ff;strokeColor=#334155;" value="Сохранить шаблон" vertex="1">
+          <mxGeometry height="70" width="260" x="800" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="load" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;ellipse;fillColor=#eff6ff;strokeColor=#334155;" value="Загрузить шаблон" vertex="1">
+          <mxGeometry height="70" width="260" x="800" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="chart" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;ellipse;fillColor=#eff6ff;strokeColor=#334155;" value="Добавить график в XLSX" vertex="1">
+          <mxGeometry height="70" width="260" x="800" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="aedit" edge="1" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;endArrow=open;endFill=0;strokeColor=#475569;strokeWidth=1.5;labelBackgroundColor=#ffffff;whiteSpace=nowrap;endArrow=none;strokeColor=#64748b;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="145" y="450" as="sourcePoint" />
+            <mxPoint x="340" y="205" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="acsv" edge="1" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;endArrow=open;endFill=0;strokeColor=#475569;strokeWidth=1.5;labelBackgroundColor=#ffffff;whiteSpace=nowrap;endArrow=none;strokeColor=#64748b;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="145" y="450" as="sourcePoint" />
+            <mxPoint x="340" y="335" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="aconfig" edge="1" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;endArrow=open;endFill=0;strokeColor=#475569;strokeWidth=1.5;labelBackgroundColor=#ffffff;whiteSpace=nowrap;endArrow=none;strokeColor=#64748b;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="145" y="450" as="sourcePoint" />
+            <mxPoint x="340" y="465" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="axlsx" edge="1" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;endArrow=open;endFill=0;strokeColor=#475569;strokeWidth=1.5;labelBackgroundColor=#ffffff;whiteSpace=nowrap;endArrow=none;strokeColor=#64748b;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="145" y="450" as="sourcePoint" />
+            <mxPoint x="340" y="595" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="apdf" edge="1" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;endArrow=open;endFill=0;strokeColor=#475569;strokeWidth=1.5;labelBackgroundColor=#ffffff;whiteSpace=nowrap;endArrow=none;strokeColor=#64748b;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="145" y="450" as="sourcePoint" />
+            <mxPoint x="340" y="725" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="acancel" edge="1" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;endArrow=open;endFill=0;strokeColor=#475569;strokeWidth=1.5;labelBackgroundColor=#ffffff;whiteSpace=nowrap;endArrow=none;strokeColor=#64748b;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="145" y="450" as="sourcePoint" />
+            <mxPoint x="340" y="855" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sconfig" edge="1" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;endArrow=open;endFill=0;strokeColor=#475569;strokeWidth=1.5;labelBackgroundColor=#ffffff;whiteSpace=nowrap;dashed=1;" value="«extend»">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="800" y="335" as="sourcePoint" />
+            <mxPoint x="600" y="455" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lconfig" edge="1" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;endArrow=open;endFill=0;strokeColor=#475569;strokeWidth=1.5;labelBackgroundColor=#ffffff;whiteSpace=nowrap;dashed=1;" value="«extend»">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="800" y="465" as="sourcePoint" />
+            <mxPoint x="600" y="465" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cexcel" edge="1" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;endArrow=open;endFill=0;strokeColor=#475569;strokeWidth=1.5;labelBackgroundColor=#ffffff;whiteSpace=nowrap;dashed=1;" value="«extend»&#xa;[график включён]">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="800" y="595" as="sourcePoint" />
+            <mxPoint x="600" y="595" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ucnote" parent="1" style="fontFamily=Arial;fontSize=15;fontColor=#172033;whiteSpace=wrap;html=0;text;strokeColor=none;fillColor=none;align=left;fontSize=14;" value="Сохранение и загрузка расширяют работу с оформлением. График добавляется только при включённой настройке." vertex="1">
+          <mxGeometry height="55" width="840" x="290" y="955" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
